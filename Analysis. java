@@ -1,0 +1,59 @@
+/*
+ * Person 4: Final Analysis
+ * Written by: Amy Patel
+ * This file calculates the average S&P 500 return
+ * after large VIX moves.
+ */
+
+import java.util.ArrayList;
+
+public class Analysis {
+
+    public static void runAnalysis(ArrayList<Double> vixChanges, ArrayList<Double> spReturns) {
+
+        int up10 = 0, up20 = 0, down10 = 0, down20 = 0;
+        double up10Sum = 0, up20Sum = 0, down10Sum = 0, down20Sum = 0;
+
+        for (int i = 0; i < vixChanges.size(); i++) {
+
+            double vix = vixChanges.get(i);
+            double sp = spReturns.get(i);
+
+            if (vix > 10) {
+                up10++;
+                up10Sum += sp;
+            }
+
+            if (vix > 20) {
+                up20++;
+                up20Sum += sp;
+            }
+
+            if (vix < -10) {
+                down10++;
+                down10Sum += sp;
+            }
+
+            if (vix < -20) {
+                down20++;
+                down20Sum += sp;
+            }
+        }
+
+        System.out.println("\n===== FINAL ANALYSIS =====");
+
+        printResult("VIX > 10%", up10, up10Sum);
+        printResult("VIX > 20%", up20, up20Sum);
+        printResult("VIX < -10%", down10, down10Sum);
+        printResult("VIX < -20%", down20, down20Sum);
+    }
+
+    private static void printResult(String label, int count, double sum) {
+        if (count > 0) {
+            double avg = sum / count;
+            System.out.println(label + " → Avg S&P Return: " + avg + " (Days: " + count + ")");
+        } else {
+            System.out.println(label + " → No data");
+        }
+    }
+}
